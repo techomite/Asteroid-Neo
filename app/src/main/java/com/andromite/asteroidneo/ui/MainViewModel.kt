@@ -49,7 +49,7 @@ class MainViewModel : ViewModel() {
 
                     }
                 }
-                val dateNeo = DateNeoDetails(getDateString(currentDate), tempList)
+                val dateNeo = DateNeoDetails(currentDate.date.toString(), tempList)
                 dateNeoDetails.add(dateNeo)
                 currentDate = increaseDate(currentDate)
             }
@@ -89,6 +89,21 @@ class MainViewModel : ViewModel() {
             e.printStackTrace()
         }
         return 0
+    }
+
+    fun getFastestAsteroid() : String{
+        var fastValue : Float = 0.0f
+        var string = ""
+        val list = dateNeoDetailsLiveData.value
+        for (item in list!!){
+            for (astro in item.asteroidDetailList!!){
+                if (astro.closeApproachData!![0].relativeVelocity!!.kilometersPerHour!!.toFloat() > fastValue)
+                    fastValue = astro.closeApproachData!![0].relativeVelocity!!.kilometersPerHour!!.toFloat()
+
+                string = "${astro.name} [${astro.id}]"
+            }
+        }
+        return string
     }
 
 }

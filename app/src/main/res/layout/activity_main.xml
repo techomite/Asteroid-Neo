@@ -77,29 +77,116 @@
         app:layout_constraintTop_toBottomOf="@+id/submitButton">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/detailsLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <LinearLayout
+                android:visibility="gone"
+                android:padding="15dp"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/progressbar"
+                android:id="@+id/detailsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="DETAILS"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="20dp"
+                    android:textSize="20sp"/>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Fastest Asteroid: "
+                        />
+
+                    <TextView
+                        android:id="@+id/fastTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="asdfasdf"
+                        />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Closest Asteroid: "
+                        />
+
+                    <TextView
+                        android:id="@+id/closeTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="asdfasdf"
+                        />
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Average Asteroid sizes: "
+                        />
+
+                    <TextView
+                        android:id="@+id/averageTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="asdfasdf"
+                        />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
 
             <ProgressBar
                 android:visibility="gone"
                 android:id="@+id/progressbar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/lineChart"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="230dp"
                 android:background="@color/white"
                 android:elevation="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/detailsLayout" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
