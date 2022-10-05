@@ -63,6 +63,8 @@ class MainActivity : AppCompatActivity() {
                 binding.detailsLayout.visibility = View.VISIBLE
 
                 binding.fastTextView.text = viewModel.getFastestAsteroid()
+                binding.closeTextView.text = viewModel.getClosestAsteroid()
+                binding.averageTextView.text = viewModel.getAverageSizes()
                 setData(entryList)
 //                setData(45, 180f)
             }
@@ -116,7 +118,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.submitButton.setOnClickListener {
-            if (binding.startDateET.text == "" && binding.endDateET.text == ""){
+
+            val days = Utils.getNumberOfDateSelected(startDate, endDate)
+            if(days > 7)
+                Toast.makeText(this, "Select dates between 7 days span", Toast.LENGTH_SHORT).show()
+            else if (binding.startDateET.text == "" && binding.endDateET.text == ""){
                 Toast.makeText(this, "Enter Start & End Date", Toast.LENGTH_SHORT).show()
             } else {
                 binding.progressbar.visibility = View.VISIBLE

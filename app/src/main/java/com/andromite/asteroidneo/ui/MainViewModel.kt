@@ -11,6 +11,7 @@ import com.andromite.asteroidneo.network.models.DateNeoDetails
 import com.andromite.moviessuggestions.utils.Utils
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
+import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.text.ParseException
 import java.time.Duration
@@ -101,6 +102,42 @@ class MainViewModel : ViewModel() {
                     fastValue = astro.closeApproachData!![0].relativeVelocity!!.kilometersPerHour!!.toFloat()
 
                 string = "${astro.name} [${astro.id}]"
+            }
+        }
+        return string
+    }
+
+    fun getClosestAsteroid() : String{
+        var closestValue : Float = 0.0f
+        var string = ""
+        val list = dateNeoDetailsLiveData.value
+
+        closestValue = list!![0].asteroidDetailList!![0].closeApproachData!![0].missDistance!!.kilometers!!.toFloat()
+
+        for (item in list){
+            for (astro in item.asteroidDetailList!!){
+                if (astro.closeApproachData!![0].relativeVelocity!!.kilometersPerHour!!.toFloat() < closestValue)
+                    closestValue = astro.closeApproachData!![0].relativeVelocity!!.kilometersPerHour!!.toFloat()
+
+                string = "${astro.name} [${astro.id}]"
+            }
+        }
+        return string
+    }
+
+    fun getAverageSizes() : String{
+        var string = ""
+        val list = dateNeoDetailsLiveData.value
+
+        for (item in list!!){
+            for (astro in item.asteroidDetailList!!){
+
+                val min :Double =astro.estimatedDiameter!!.kilometers!!.estimatedDiameterMin!!.toDouble()
+                val max :Double =astro.estimatedDiameter!!.kilometers!!.estimatedDiameterMax!!.toDouble()
+
+                val avg = min + max / 2
+                string += "$avg, "
+
             }
         }
         return string
