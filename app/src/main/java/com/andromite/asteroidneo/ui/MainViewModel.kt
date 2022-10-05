@@ -11,7 +11,6 @@ import com.andromite.asteroidneo.network.models.DateNeoDetails
 import com.andromite.moviessuggestions.utils.Utils
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
-import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.text.ParseException
 import java.time.Duration
@@ -93,7 +92,7 @@ class MainViewModel : ViewModel() {
     }
 
     fun getFastestAsteroid() : String{
-        var fastValue : Float = 0.0f
+        var fastValue = 0.0f
         var string = ""
         val list = dateNeoDetailsLiveData.value
         for (item in list!!){
@@ -108,7 +107,7 @@ class MainViewModel : ViewModel() {
     }
 
     fun getClosestAsteroid() : String{
-        var closestValue : Float = 0.0f
+        var closestValue: Float
         var string = ""
         val list = dateNeoDetailsLiveData.value
 

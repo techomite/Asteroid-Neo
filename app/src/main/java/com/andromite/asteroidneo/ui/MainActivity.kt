@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.andromite.asteroidneo.databinding.ActivityMainBinding
 import com.andromite.moviessuggestions.utils.Utils
-import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
@@ -23,8 +22,8 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var viewModel: MainViewModel
-    lateinit var binding: ActivityMainBinding
+    private lateinit var viewModel: MainViewModel
+    private lateinit var binding: ActivityMainBinding
     private lateinit var startDate : Date
     private lateinit var endDate : Date
 
@@ -53,7 +52,7 @@ class MainActivity : AppCompatActivity() {
 
             for (dateDetails in it){
                 Utils.floge("x: ${dateDetails.date.toFloat()} y: ${dateDetails.asteroidDetailList!!.size.toFloat()}")
-                val entry = Entry(dateDetails.date.toFloat(), dateDetails.asteroidDetailList!!.size.toFloat())
+                val entry = Entry(dateDetails.date.toFloat(), dateDetails.asteroidDetailList.size.toFloat())
                 entryList.add(entry)
             }
 
@@ -84,12 +83,12 @@ class MainActivity : AppCompatActivity() {
 
             val datePickerDialog = DatePickerDialog(
                 this,
-                { view, myear, mmonth, mdayOfMonth ->
-                    startDate.year = myear
-                    startDate.month = mmonth
+                { _, year, month, mdayOfMonth ->
+                    startDate.year = year
+                    startDate.month = month
                     startDate.date = mdayOfMonth
 
-                    binding.startDateET.text = "$myear-$mmonth-$mdayOfMonth"
+                    binding.startDateET.text = "$year-$month-$mdayOfMonth"
                 },
                 year,
                 month,
@@ -103,11 +102,11 @@ class MainActivity : AppCompatActivity() {
 
             val datePickerDialog = DatePickerDialog(
                 this,
-                { view, myear, mmonth, mdayOfMonth ->
-                    endDate.year = myear
-                    endDate.month = mmonth
+                { _, year, month, mdayOfMonth ->
+                    endDate.year = year
+                    endDate.month = month
                     endDate.date = mdayOfMonth
-                    binding.endDateET.text = "$myear-$mmonth-$mdayOfMonth"
+                    binding.endDateET.text = "$year-$month-$mdayOfMonth"
                 },
                 year,
                 month,
@@ -136,13 +135,13 @@ class MainActivity : AppCompatActivity() {
     private fun setData(values: MutableList<Entry>) {
 
         val set1: LineDataSet
-        if (binding.lineChart.getData() != null &&
-            binding.lineChart.getData().getDataSetCount() > 0
+        if (binding.lineChart.data != null &&
+            binding.lineChart.data.dataSetCount > 0
         ) {
-            set1 = binding.lineChart.getData().getDataSetByIndex(0) as LineDataSet
+            set1 = binding.lineChart.data.getDataSetByIndex(0) as LineDataSet
             set1.values = values
             set1.notifyDataSetChanged()
-            binding.lineChart.getData().notifyDataChanged()
+            binding.lineChart.data.notifyDataChanged()
             binding.lineChart.notifyDataSetChanged()
         } else {
             // create a dataset and give it a type
@@ -179,7 +178,7 @@ class MainActivity : AppCompatActivity() {
             // set the filled area
             set1.setDrawFilled(true)
             set1.fillFormatter =
-                IFillFormatter { dataSet, dataProvider -> binding.lineChart.getAxisLeft().getAxisMinimum() }
+                IFillFormatter { _, _ -> binding.lineChart.axisLeft.axisMinimum }
 
             val dataSets = ArrayList<ILineDataSet>()
             dataSets.add(set1) // add the data sets
@@ -188,7 +187,7 @@ class MainActivity : AppCompatActivity() {
             val data = LineData(dataSets)
 
             // set data
-            binding.lineChart.setData(data)
+            binding.lineChart.data = data
             binding.lineChart.visibility = View.VISIBLE
         }
     }
